@@ -174,7 +174,7 @@ def createtxt(states:list):
     proboff=[70,10,20]
     probon=[50,20,20,10]
     state2=[-1,0,1,2]
-    f = open("newfile.txt", "w+")
+    f = open("input.txt", "w+")
     for i in states:     ##For loop to write the operations involving the thermostat off
         for p in range(0,3):
             f.write("state"+str(states[i])+"-0-"+"state"+str(states[i]-state2[p])+":"+str(proboff[p]))
