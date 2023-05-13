@@ -1,38 +1,22 @@
-import re
-import random
-class MDPStat:
-    """This object represents information about MDP states, identified by a unique name
-    """
-#I need also a repressentation of actions. Actions are indentified by a name and a probability which shall be represneted as a floating-point number between 0 and 1
-class MDPAction:
-    """This object represents information about MDP actions, identified by a unique name and probability
-    """
-    def __init__(self, id: str, prob: float):
-        """Any action is uniquely identified by a string. The probability is used in the MDP computation 
+import re 
 
-        Args:
-            id (str): _description_
-            prob (float): _description_
-        """
-class MDPTransition:
-    """Definition of MDP Transition
+class State:
+    """This class contains information about the state
     """
-    def __init__(self, from_state: MDPStat, action: MDPAction, to_state: MDPStat):
-        """A transition is defined by a starting state, an action and a destination state
+    def __init__(self, name:str):
+        self.name = name
 
-        Args:
-            from_state (MDPState): _description_
-            action (MDPAction): _description_
-            to_state (MDPState): _description_
-        """
-class MDPTransitions:
-    """Definition of a container MDP Transition
+class States:
+    """_summary_
+
+    Returns:
+        _type_: _description_
     """
     def __init__(self):
-        """A container of transitions is a list of transitions 
-        """
+        pass
     
-    def __iadd__(self, other:MDPAction):
+    def __iadd__(self, next:State):
+        
         return self
     
     def __len__(self):
@@ -44,37 +28,113 @@ class MDPTransitions:
     def __next__(self):
         """
         """
-        
-#I need also to keep a separate list of transitions:First ,define a single transition
+
+class Transition:
+    """This class contains the information about actions between states
+    """
+    def __init__(self, from_state: State, probability:int, policy:str, to_state: State):
+        """Any action is identified by a name which is a string. The probability of that action is used in the MDP computation 
+
+        Args:
+            name (str): identifier of the action
+            prob (float): probability of the action """
+        self.from_state = from_state
+        self.policy = policy
+        self.to_state = to_state
+        self.probability = probability
+    def __getstate1__(self):
+        return self.from_state
+    def __getstate2__(self):
+        return self.to_state
+    def __getprobability__(self):
+        return self.probability
+    def __getpolicy__(self):
+        return self.policy
+
+
+class Transitions:
+    """Container of transitions
+    """
+    def __init__(self, size,head):
+        self.head = head
+        self
+    
+   
+    
+    def __len__(self):
+        """_summary_
+        """
+    def __iter__(self):
+        """Returns 
+        """
+    def __next__(self):
+        """
+        """
 
 def parse(file: str)-> str:
 
     """Given a file it returns any strings that match the format given
     """
-    
-    with open("file.txt") as stream:
+    lines  = []
+    i = 0
+    with open(file) as stream:
         for line in stream:
-            m=re.match(r'^\w+-\w+-\w+:[0-9]+$',string)
+            m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)
             if m!=None:
                 print("There is a match\n")
-                print(m)
+                print(line)
+                lines.append(line)
+                i += 1
+                
             else:
                 print("This line does not follow the pattern")   
-                 
-            iline += 1
+    return lines                 
 
-         
 def Bellman_Equation():
     """Computing the bellman equations 
     """
-
+    
+def optimal_policy(state):
+    """compute the optimal policy
+    """
+    for i in range():
+        pass
    
 def compute():
     """Compute the data
     """
 
+def get(lines:list):    
+    final = []
+    for line in lines:
+
+        line.replace('-',':')
+        split = line.split('-')
+        print(split)
+        final.append(split)
+    return final
+    
+def create_matrix(lines:list):
+    counter = 0
+
+    matrix = [[0]*len(lines) for _ in range(len(lines))]
+    print(matrix)
+
+    for i in lines:
+        matrix[counter] = lines[0]
+        matrix[0][counter] = lines[1]
+        matrix[counter][counter] = lines[2]
+    return matrix
+
+
         
-def get(): 
-    print("")
-    regexp = r'\d.\d+'
-    if m := re.match(r'?P<inital_state>[a-z]+)\s*-\s*(?P<action>[a-z]+):\s*(?<prob>\d)')
+
+
+            
+            
+            
+    
+lines =  parse("input.txt")
+separated_lines = get(lines)
+matrix = create_matrix(separated_lines)
+print(matrix)
