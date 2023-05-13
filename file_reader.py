@@ -7,15 +7,16 @@ def get(lines:list):
         final.append(split)
     return final
 
-def createtxt(states:list):
-    actions=[0,1]   ###ELIMInate athe  end if neccesary
+def createtxt(states:list, actions:list):
+    """"Creates a text file with the format State1-Action-State2:Probability
+    """"
     proboff=[70,10,20]
     probon=[50,20,20,10]
     state2=[-1,0,1,2]
     f = open("newfile.txt", "w+")
     for i in states:     ##For loop to write the operations involving the thermostat off
         for p in range(0,3):
-            f.write("state"+str(states[i])+"-0-"+"state"+str(states[i]-state2[p])+":"+str(proboff[p]))
+            f.write("state"+str(states[i])+"-"+str(actions[0])+"-"+"state"+str(states[i]-state2[p])+":"+str(proboff[p]))
             f.write("\n")
     f.write("state16-0-state16:90\n")                ##state16=16ºC state17=24.5ºC state18=25ºC
     f.write("state16-0-state0:10\n")
@@ -26,7 +27,7 @@ def createtxt(states:list):
     f.write("state18-0-state17:70\n")
     for i in states:     ##For loop to write the operations involving the thermostat on
         for p in range(0,4):
-            f.write("state"+str(states[i])+"-1-"+"state"+str(states[i]-state2[p])+":"+str(probon[p]))
+            f.write("state"+str(states[i])+"-"+str(actions[1])+"-"+"state"+str(states[i]-state2[p])+":"+str(probon[p]))
             f.write("\n")
     f.write("state15-1-state15:30\n")
     f.write("state15-1-state0:50\n")
