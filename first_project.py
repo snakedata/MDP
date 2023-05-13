@@ -90,21 +90,34 @@ def parse(file: str)-> str:
                 print("This line does not follow the pattern")   
     return lines                 
 
+def minimum(l:list):
+    return l.index(min(l))
+
 def Bellman_Equation(costs:list,probabilities:list,iterations:int):
     """Computing the bellman equations for each state
 
-    Vi+1(StateX) = min(cost(policy1)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
-                       cost(policy2)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
+    Vi+1(StateX) = min(cost(policy1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
+                       cost(policy2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
     """
-    Vi = []
-    sum = 0
+    #The organization of the lists costs and probabilities has to be very specific
+    #                   State 1        State2          State3        State 1        State2          State3       State 1        State2          State3   
+    #Probabilies:   [[[0.5,0.2,0.3],[0.1,0.0,0.3],[0.2,0.2,0.4]],[[0.3,0.1,0.2],[0.2,0.0,0.1],[0.4,0.3,0.2]],[[0.1,0.3,0.3],[0.1,0.0,0.3],[0.3,0.2,0.5]]]
+    #                               Policy 1                                        Policy 2                                Policy 3
+    Vi = [1]*len(probabilities)         
+    #create a list of lenght of policies
+    sum = [0]*len(costs)
     for iter in range(iterations):
-        for i in range(len(Vi)):
-            sum += costs(i)
-            for k in range(len(probabilities)):
-                sum+= probabilities(k)*Vi(k)
-
-            sum =0
+        #length of costs tells us the amount of policies
+        for v in range(len(Vi)):
+            for i in range(len(costs)):
+                sum[i]  += costs(i)
+                for policy in range(len(probabilities[i])):
+                    for state in range(len(probabilities[i][policy])):
+                        sum[i] += probabilities[i][policy][state]*Vi(state)
+            
+            Vi[v]=minimum(sum)
+            sum = 0
+        v =0    
 
 
     
