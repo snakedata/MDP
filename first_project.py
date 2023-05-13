@@ -1,4 +1,5 @@
 import re 
+import file_reader
     
 def parse(file: str)-> str:
 
@@ -24,6 +25,8 @@ def minimum(l:list):
 
 def duplicates(l:list):
     return list(set(l))
+def create_list_of(n:int,l:int):
+    return [n]*l
 
 def Bellman_Equation(costs:list,probabilities:list):
     """Computing the bellman equations for each state
@@ -37,19 +40,26 @@ def Bellman_Equation(costs:list,probabilities:list):
     #                               Policy 1                                        Policy 2                                Policy 3
     #Costs:         [1,1,1]
     # Policy1,Policy2,Policy3
-    Vi = [1]*len(probabilities)         
-    #create a list of lenght of policies
-    sum = [0]*len(costs)
+
+           
+    #create a list of lenght of policies of sums and policies
+    
+    Vi = create_list_of(1,len(probabilities[0])) 
+    sum = create_list_of(0,len(probabilities[0])) 
+    
+    print(Vi)
+    print(sum)
     min_sum = 0
     cond = True
+
     while cond:
         #length of costs tells us the amount of policies
         for v in range(len(Vi)):
-            for i in range(len(costs)):
-                sum[i]  += costs(i)
+            for i in range(len(probabilities)-1):
+                sum[i] = sum[i]+ costs[i]
                 for policy in range(len(probabilities[i])):
                     for state in range(len(probabilities[i][policy])):
-                        sum[i] += probabilities[i][policy][state]*Vi(state)
+                        sum[i] += probabilities[i][policy][state]*Vi[state]
             min_sum = minimum(sum)
             if (min_sum -Vi[v])<0.5:
                 cond = False
@@ -59,70 +69,45 @@ def Bellman_Equation(costs:list,probabilities:list):
 
 
     
-def get(lines:list):    
-    final = []
 
-    for line in lines:
-        split = line.replace(':','-')
-        split = split.split('-')
-        final.append(split)
-    return final
-
-def createtxt(states:list):
-    actions=[0,1]   ###ELIMInate athe  end if neccesary
-    proboff=[70,10,20]
-    probon=[50,20,20,10]
-    state2=[-1,0,1,2]
-    f = open("newfile.txt", "w+")
-    for i in states:     ##For loop to write the operations involving the thermostat off
-        for p in range(0,3):
-            f.write("state"+str(states[i])+"-0-"+"state"+str(states[i]-state2[p])+":"+str(proboff[p]))
-            f.write("\n")
-    f.write("State16-0-State16:90\n")                ##State16=16ºC State17=24.5ºC State18=25ºC
-    f.write("State16-0-State0:10\n")
-    f.write("State17-0-State17:20\n")
-    f.write("State17-0-State15:70\n")
-    f.write("State17-0-State18:10\n")
-    f.write("State18-0-State18:30\n")
-    f.write("State18-0-State17:70\n")
-    for i in states:     ##For loop to write the operations involving the thermostat on
-        for p in range(0,4):
-            f.write("state"+str(states[i])+"-1-"+"state"+str(states[i]-state2[p])+":"+str(probon[p]))
-            f.write("\n")
-    f.write("State15-1-State15:30\n")
-    f.write("State15-1-State0:50\n")
-    f.write("State15-1-State1:20\n")
-    f.write("State17-1-State17:20\n")
-    f.write("State17-1-State18:70\n")
-    f.write("State17-1-State15:10\n")
-    f.write("State18-1-State18:90\n")
-    f.write("State18-1-State17:10\n")
 
 def create_matrix(lines:list):
     counter = 0
-    
-    matrix = [[0]*(len(lines)+1) for _ in range(len(lines)+1)]
-    
     policies = []
     states = []
-    for policy in range(lines):
+   
+    for policy in range(len(lines)):
         policies.append(lines[policy][1])
     policies = duplicates(policies)
-    policies = sorted(policies)    
-    for i in range(lines):
+    policies = sorted(policies)  
+    print("policies",policies)  
+    for i in range(len(lines)):
         states.append(lines[i][0])
         states.append(lines[i][2])
     states = duplicates(states)
-    states = sorted(states)
-    for i in range(lines):
+    states = sorted(states) 
+    print(states)
+    tmatrix = [0]*(len(policies))
+    smatrix = [[0]*(len(states)) for _ in range(len(states))]
+    for i in range(len(policies)):
+        tmatrix[i] = smatrix
+
+   
+    for i in range(len(lines)):
         position_policy = policies.index(lines[i][1])
         position_state1 = states.index(lines[i][0])
         position_state2 = states.index(lines[i][2])
-        matrix[position_policy][position_state1][position_state2] = lines[i][3]
-    return matrix
+        tmatrix[position_policy][position_state1][position_state2] = int(lines[i][3])/100
+    print(states)
+    return tmatrix
 
-
-lines =  parse("input.txt")
-separated_lines = get(lines)
+state_input = []
+for i in range(15):
+    state_input.append(i)
+file_reader.createtxt(state_input)
+lines =  parse("newfile.txt")
+separated_lines = file_reader.get(lines)
 matrix = create_matrix(separated_lines)
-Bellman_Equation(matrix)
+print(matrix)
+v = Bellman_Equation(create_list_of(10,len(matrix[0])),matrix)
+print(v)
