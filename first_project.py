@@ -32,14 +32,14 @@ class States:
 class Transition:
     """This class contains the information about actions between states
     """
-    def __init__(self, from_state: State, probability:int, policy:str, to_state: State):
+    def __init__(self, from_state: State, probability:int, to_state: State):
         """Any action is identified by a name which is a string. The probability of that action is used in the MDP computation 
 
         Args:
             name (str): identifier of the action
             prob (float): probability of the action """
         self.from_state = from_state
-        self.policy = policy
+       
         self.to_state = to_state
         self.probability = probability
     def __getstate1__(self):
@@ -48,28 +48,9 @@ class Transition:
         return self.to_state
     def __getprobability__(self):
         return self.probability
-    def __getpolicy__(self):
-        return self.policy
+    
 
 
-class Transitions:
-    """Container of transitions
-    """
-    def __init__(self, size,head):
-        self.head = head
-        self
-    
-   
-    
-    def __len__(self):
-        """_summary_
-        """
-    def __iter__(self):
-        """Returns 
-        """
-    def __next__(self):
-        """
-        """
 
 def parse(file: str)-> str:
 
@@ -122,7 +103,7 @@ def Bellman_Equation(costs:list,probabilities:list):
                     for state in range(len(probabilities[i][policy])):
                         sum[i] += probabilities[i][policy][state]*Vi(state)
             min_sum = minimum(sum)
-            if (min_sum -Vi[v])<0:
+            if (min_sum -Vi[v])<0.5:
                 cond = False
             Vi[v]=minimum(sum)
             sum = 0
@@ -148,33 +129,13 @@ def get(lines:list):
         split = split.split('-')
         final.append(split)
     return final
-    
-def create_matrix(lines:list):
-    counter = 0
 
-    matrix = [[0]*(len(lines)+1) for _ in range(len(lines)+1)]
-    lines_states = []
-    for i in range(lines):
-        lines_states.append(lines[i][0])
-        lines_states.append(lines[i][2])
-    list_states = duplicates(list_states)
-    list_states = sorted(list_states)
-    for i in range(len(lines)+1): 
-        if list_states
-        print(counter)
-        matrix[0][1] = lines[0]
-        matrix[1][0] = lines[0][1]
-        matrix[1][1] = lines[0][1]
-        counter += 1
- 
-    
-    return matrix
 def createtxt(states:list):
     actions=[0,1]   ###ELIMInate athe  end if neccesary
     proboff=[70,10,20]
     probon=[50,20,20,10]
     state2=[-1,0,1,2]
-    f = open("input.txt", "w+")
+    f = open("newfile.txt", "w+")
     for i in states:     ##For loop to write the operations involving the thermostat off
         for p in range(0,3):
             f.write("state"+str(states[i])+"-0-"+"state"+str(states[i]-state2[p])+":"+str(proboff[p]))
@@ -199,7 +160,28 @@ def createtxt(states:list):
     f.write("State18-1-State18:90\n")
     f.write("State18-1-State17:10\n")
 
-
+def create_matrix(lines:list):
+    counter = 0
+    
+    matrix = [[0]*(len(lines)+1) for _ in range(len(lines)+1)]
+    
+    policies = []
+    states = []
+    for policy in range(lines):
+        policies.append(lines[policy][1])
+    policies = duplicates(policies)
+    policies = sorted(policies)    
+    for i in range(lines):
+        states.append(lines[i][0])
+        states.append(lines[i][2])
+    states = duplicates(states)
+    states = sorted(states)
+    for i in range(lines):
+        position_policy = policies.index(lines[i][1])
+        position_state1 = states.index(lines[i][0])
+        position_state2 = states.index(lines[i][2])
+        matrix[position_policy][position_state1][position_state2] = lines[i][3]
+    return matrix
 
 
         
