@@ -169,6 +169,37 @@ def create_matrix(lines:list):
  
     
     return matrix
+def createtxt(states:list):
+    actions=[0,1]   ###ELIMInate athe  end if neccesary
+    proboff=[70,10,20]
+    probon=[50,20,20,10]
+    state2=[-1,0,1,2]
+    f = open("newfile.txt", "w+")
+    for i in states:     ##For loop to write the operations involving the thermostat off
+        for p in range(0,3):
+            f.write("state"+str(states[i])+"-0-"+"state"+str(states[i]-state2[p])+":"+str(proboff[p]))
+            f.write("\n")
+    f.write("State16-0-State16:90\n")                ##State16=16ºC State17=24.5ºC State18=25ºC
+    f.write("State16-0-State0:10\n")
+    f.write("State17-0-State17:20\n")
+    f.write("State17-0-State15:70\n")
+    f.write("State17-0-State18:10\n")
+    f.write("State18-0-State18:30\n")
+    f.write("State18-0-State17:70\n")
+    for i in states:     ##For loop to write the operations involving the thermostat on
+        for p in range(0,4):
+            f.write("state"+str(states[i])+"-1-"+"state"+str(states[i]-state2[p])+":"+str(probon[p]))
+            f.write("\n")
+    f.write("State15-1-State15:30\n")
+    f.write("State15-1-State0:50\n")
+    f.write("State15-1-State1:20\n")
+    f.write("State17-1-State17:20\n")
+    f.write("State17-1-State18:70\n")
+    f.write("State17-1-State15:10\n")
+    f.write("State18-1-State18:90\n")
+    f.write("State18-1-State17:10\n")
+
+
 
 
         
