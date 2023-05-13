@@ -47,24 +47,25 @@ def Bellman_Equation(costs:list,probabilities:list):
     Vi = create_list_of(1,len(probabilities[0])) 
     sum = create_list_of(0,len(probabilities[0])) 
     
-    print(Vi)
-    print(sum)
+  
     min_sum = 0
     cond = True
 
     while cond:
         #length of costs tells us the amount of policies
-        for v in range(len(Vi)):
+        for v in range(len(probabilities)):
             for i in range(len(probabilities)-1):
                 sum[i] = sum[i]+ costs[i]
                 for policy in range(len(probabilities[i])):
                     for state in range(len(probabilities[i][policy])):
                         sum[i] += probabilities[i][policy][state]*Vi[state]
+                        print(sum)
             min_sum = minimum(sum)
             if (min_sum -Vi[v])<0.5:
                 cond = False
+            
             Vi[v]=minimum(sum)
-            sum = 0
+            
     return Vi       
 
 
@@ -80,13 +81,13 @@ def create_matrix(lines:list):
         policies.append(lines[policy][1])
     policies = duplicates(policies)
     policies = sorted(policies)  
-    print("policies",policies)  
+     
     for i in range(len(lines)):
         states.append(lines[i][0])
         states.append(lines[i][2])
     states = duplicates(states)
     states = sorted(states) 
-    print(states)
+    
     tmatrix = [0]*(len(policies))
     smatrix = [[0]*(len(states)) for _ in range(len(states))]
     for i in range(len(policies)):
@@ -98,7 +99,7 @@ def create_matrix(lines:list):
         position_state1 = states.index(lines[i][0])
         position_state2 = states.index(lines[i][2])
         tmatrix[position_policy][position_state1][position_state2] = int(lines[i][3])/100
-    print(states)
+    
     return tmatrix
 
 state_input = []
@@ -108,6 +109,6 @@ file_reader.createtxt(state_input)
 lines =  parse("newfile.txt")
 separated_lines = file_reader.get(lines)
 matrix = create_matrix(separated_lines)
-print(matrix)
+
 v = Bellman_Equation(create_list_of(10,len(matrix[0])),matrix)
 print(v)
