@@ -90,9 +90,23 @@ def parse(file: str)-> str:
                 print("This line does not follow the pattern")   
     return lines                 
 
-def Bellman_Equation():
-    """Computing the bellman equations 
+def Bellman_Equation(costs:list,probabilities:list,iterations:int):
+    """Computing the bellman equations for each state
+
+    Vi+1(StateX) = min(cost(policy1)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
+                       cost(policy2)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
     """
+    Vi = []
+    sum = 0
+    for iter in range(iterations):
+        for i in range(len(Vi)):
+            sum += costs(i)
+            for k in range(len(probabilities)):
+                sum+= probabilities(k)*Vi(k)
+
+            sum =0
+
+
     
 def optimal_policy(state):
     """compute the optimal policy
@@ -106,24 +120,29 @@ def compute():
 
 def get(lines:list):    
     final = []
-    for line in lines:
 
-        line.replace('-',':')
-        split = line.split('-')
-        print(split)
+    for line in lines:
+        split = line.replace(':','-')
+        split = split.split('-')
         final.append(split)
+
     return final
     
 def create_matrix(lines:list):
     counter = 0
 
-    matrix = [[0]*len(lines) for _ in range(len(lines))]
+    matrix = [[0]*(len(lines)+1) for _ in range(len(lines)+1)]
     print(matrix)
+    print(lines)
 
-    for i in lines:
-        matrix[counter] = lines[0]
-        matrix[0][counter] = lines[1]
-        matrix[counter][counter] = lines[2]
+    for i in range(len(lines)+1): 
+        print(counter)
+        matrix[0][1] = lines[0]
+        matrix[1][0] = lines[1]
+        matrix[1][1] = lines[2]
+        counter += 1
+ 
+    
     return matrix
 
 
