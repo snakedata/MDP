@@ -6,18 +6,13 @@ def parse(file: str)-> str:
     """Given a file it returns any strings that match the format given
     """
     lines  = []
-    i = 0
     with open(file) as stream:
         for line in stream:
             m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)
             if m!=None:
-                print("There is a match\n")
-                print(line)
-                lines.append(line)
-                i += 1
-                
+                lines.append(line)               
             else:
-                print("This line does not follow the pattern")   
+                print("This line does not follow the pattern "+str(m))   
     return lines                 
 def get(lines:list):    
     final = []
@@ -28,9 +23,13 @@ def get(lines:list):
         final.append(split)
     return final
 def minimum(l:list):
+     """""Finds the minimum element inside the list
+    """
     return l.index(min(l))
 
 def duplicates(l:list):
+    """""Eliminates any duplicates inside the list
+    """
     return list(set(l))
 def create_list_of(n:int,l:int):
     return [n]*l
