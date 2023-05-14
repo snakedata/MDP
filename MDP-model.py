@@ -16,7 +16,14 @@ def parse(file: str)-> str:
             else:
                 print("This line does not follow the pattern position:",i)   
     return lines                 
+def get(lines:list):    
+    final = []
 
+    for line in lines:
+        split = line.replace(':','-')
+        split = split.split('-')
+        final.append(split)
+    return final    
 def minimum(l:list):
     return l.index(min(l))
 
