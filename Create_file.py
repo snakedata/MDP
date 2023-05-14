@@ -1,12 +1,3 @@
-def get(lines:list):    
-    final = []
-
-    for line in lines:
-        split = line.replace(':','-')
-        split = split.split('-')
-        final.append(split)
-    return final
-
 def createtxt(states:list, actions:list):
     """"Creates a text file with the format State1-Action-State2:Probability
     """"
