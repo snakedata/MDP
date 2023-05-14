@@ -113,3 +113,17 @@ def create_matrix(lines:list):
   
     
     return tmatrix
+
+
+state_input = []
+for i in range(16):
+    state_input.append(i)
+
+file_reader.createtxt(state_input,[0,1])
+lines =  parse("newfile.txt")
+separated_lines = file_reader.get(lines)
+
+matrix = create_matrix(separated_lines)
+v = Bellman_Equation(create_list_of(1,len(matrix)),matrix)
+print(v)
+
