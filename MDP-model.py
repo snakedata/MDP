@@ -31,7 +31,7 @@ def create_list_of(n:int,l:int):
     return [n]*l
 
 def Bellman_Equation(costs:list,probabilities:list):
-    """Computing the Bellman equations for each state using as input the conditional probability tables
+    """Computing the bellman equations for each state
     Vi+1(StateX) = min(cost(policy1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
                        cost(policy2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
     The organization of the lists costs and probabilities has to be very specific
@@ -44,6 +44,7 @@ def Bellman_Equation(costs:list,probabilities:list):
            
     Create a list of lenght of policies of sums and policies
     """
+    Vi = create_list_of(1,2)
     Vi = create_list_of(1,len(probabilities[0])) 
     #costs of each policy is equivalent for now to the inital costs
     sum = costs
@@ -55,7 +56,7 @@ def Bellman_Equation(costs:list,probabilities:list):
     while cond:
         #iterate through the number of policies
         for policy in range(len(probabilities)):
-            #iterate throught he number of states
+            #iterate through he number of states
             for state in range(len(probabilities[policy])):
                 #iterate through the number of probabilities from going from state: state to any other state
                 for probability in range(len(probabilities[policy][state])):
@@ -66,11 +67,9 @@ def Bellman_Equation(costs:list,probabilities:list):
                 
                 Vi[state]=min_sum
                 sum =costs
-            if (min_sum -Vi[policy])<0.5:
-                cond = False
-          
-            
-    return Vi      
+            if (min_sum -Vi[policy])<0.1:
+                cond = False 
+    return Vi          
 
 
     
