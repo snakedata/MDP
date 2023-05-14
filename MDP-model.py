@@ -79,7 +79,7 @@ def Bellman_Equation(costs:list,probabilities:list):
 
 
 def create_matrix(lines:list):
-    counter = 0
+    
     policies = []
     states = []
    
@@ -98,27 +98,19 @@ def create_matrix(lines:list):
     smatrix = [[0]*(len(states)) for _ in range(len(states))]
     for i in range(len(policies)):
         tmatrix[i] = smatrix
-    print(policy)
+    
    
     for i in range(len(lines)):
         position_policy = policies.index(lines[i][1])
         position_state1 = states.index(lines[i][0])
         position_state2 = states.index(lines[i][2])
-        print("Policy:",lines[i][1])
-        print("State1:",lines[i][0])
-        print("State2:",lines[i][2])
-        print("Probability",int(lines[i][3])/100)
+        if position_state1 == 0:
+            print("Policy:",lines[i][1],position_policy)
+            print("State1:",lines[i][0],position_state1)
+            print("State2:",lines[i][2],position_state2)
+            print("Probability",int(lines[i][3])/100)
+            print(tmatrix[0][0])
         tmatrix[position_policy][position_state1][position_state2] = int(lines[i][3])/100
+  
     
     return tmatrix
-
-state_input = []
-for i in range(16):
-    state_input.append(i)
-
-file_reader.createtxt(state_input,[0,1])
-lines =  parse("newfile.txt")
-separated_lines = file_reader.get(lines)
-matrix = create_matrix(separated_lines)
-print(matrix[0][0])
-v = Bellman_Equation(create_list_of(1,len(matrix)),matrix)
