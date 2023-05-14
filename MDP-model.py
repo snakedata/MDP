@@ -14,7 +14,7 @@ def parse(file: str)-> str:
             else:
                 print("This line does not follow the pattern position:")   
     return lines                 
-def get(lines:list):    
+def get(lines:list)->list:    
     final = []
 
     for line in lines:
@@ -22,15 +22,21 @@ def get(lines:list):
         split = split.split('-')
         final.append(split)
     return final    
-def minimum(l:list):
+def minimum(l:list)->int:
+    """returns the minimum element of the list
+    """
     return l.index(min(l))
 
-def duplicates(l:list):
+def duplicates(l:list)->list:
+    """returns the list without any duplicates
+    """
     return list(set(l))
-def create_list_of(n:int,l:int):
+def create_list_of(n:int,l:int)->list:
+    """creates a list size l with every value equal to n
+    """
     return [n]*l
 
-def Bellman_Equation(costs:list,probabilities:list):
+def Bellman_Equation(costs:list,probabilities:list)->list:
     """Computing the bellman equations for each state
     Vi+1(StateX) = min(cost(policy1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
                        cost(policy2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
@@ -75,7 +81,7 @@ def Bellman_Equation(costs:list,probabilities:list):
     
 
 
-def create_matrix(lines:list):
+def create_matrix(lines:list)->list:
     
     policies = []
     states = []
