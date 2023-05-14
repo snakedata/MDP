@@ -1,6 +1,6 @@
 import re 
 import file_reader
-import numpy as np
+
 
 def parse(file: str)-> str:
     """Given a file it returns any strings that match the format given
@@ -38,48 +38,6 @@ def create_list_of(n:int,l:int)->list:
     """
     return [n]*l
 
-def Bellman_Equation(costs:list,probabilities:list)->list:
-    """Computing the bellman equations for each state
-    Vi+1(StateX) = min(cost(action1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
-                       cost(action2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
-    The organization of the lists costs and probabilities has to be very specific
-                       State 1        State2          State3        State 1        State2          State3       State 1        State2          State3   
-    Probabilies:   [[[0.5,0.2,0.3],[0.1,0.0,0.3],[0.2,0.2,0.4]],[[0.3,0.1,0.2],[0.2,0.0,0.1],[0.4,0.3,0.2]],[[0.1,0.3,0.3],[0.1,0.0,0.3],[0.3,0.2,0.5]]]
-                                   action 1                                        action 2                                action 3
-    Costs:         [1,1,1]
-    action1,action2,action3
-
-           
-    Create a list of lenght of actions of sums and actions
-    """
-    Vi = create_list_of(1,2)
-    Vi = create_list_of(1,len(probabilities[0][0])) 
-    #costs of each action is equivalent for now to the inital costs
-    sum = costs
-    
-    
-    min_sum = 0
-    cond = True
-    iter = 10
-    for i in range(iter):
-        #iterate through the number of actions
-        for action in range(len(probabilities)):
-            #iterate through he number of states
-            for state in range(len(probabilities[action])):
-                #iterate through the number of probabilities from going from state: state to any other state
-                for probability in range(len(probabilities[action][state])):
-                    #for state find the optimal action each iteration which will be the mimunm of that the sum of the cost of each action of each state
-                    sum[action] += probabilities[action][state][probability]*Vi[probability]
-                print(Vi)
-                min_sum = min(sum)
-                
-                Vi[state]=min_sum
-                sum =costs
-                
-            if (min_sum -Vi[action])<0.1:
-                cond = False 
-    return Vi          
-
 
 def Bellman_Equation(costs:list,probabilities:list):
     """Computing the bellman equations for each state
@@ -97,15 +55,15 @@ def Bellman_Equation(costs:list,probabilities:list):
     """
     
     Vi = create_list_of(1,len(probabilities[0][0])) 
+    Vi[2] = 0
     #costs of each action is equivalent for now to the inital costs
     sum = costs
-    iter = 50
+    iter = 10
     
     min_sum = 0
     cond = True
-
+    
     for v in range(iter):
-        
         #iterate through he number of states
         for state in range(len(probabilities[0])):    
             #iterate through the number of actions
@@ -117,8 +75,9 @@ def Bellman_Equation(costs:list,probabilities:list):
                     sum[action] += probabilities[action][state][probability]*Vi[probability]
                     print(sum)
 
-            print(state)     
+                
             print(Vi)
+            print(sum)
             min_sum = min(sum)
             Vi[state]=min_sum
             sum =create_list_of(1,2)
@@ -177,9 +136,9 @@ for i in range(15):
 
 file_reader.createtxt(state_input,[0,1])
 lines =  parse("newfile.txt")
-separated_lines = get(lines)
+separated_lines = file_reader.get(lines)
 
 matrix = create_matrix(separated_lines)
-v = Bellman_Equation(create_list_of(1,len(matrix)),matrix)
+v = Bellman_Equation([1,1],matrix)
 
-print(v)
+print(matrix)
