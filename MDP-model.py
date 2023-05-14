@@ -2,7 +2,6 @@ import re
 import file_reader
     
 def parse(file: str)-> str:
-
     """Given a file it returns any strings that match the format given
     """
     lines  = []
