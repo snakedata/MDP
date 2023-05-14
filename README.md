@@ -19,4 +19,5 @@ After that, we use the CPT's as inputs for the function "Bellman_Equation" which
 To finish it up, we print on screen the optimal policy 
 
 Reference
+
 Stuart Russell and Peter Norvig. Artificial Intelligence: A Modern Approach (3rd ed.).
