@@ -47,17 +47,21 @@ def Bellman_Equation(costs:list,probabilities:list):
     Create a list of lenght of policies of sums and policies
     """
     Vi = create_list_of(1,len(probabilities[0])) 
+    #costs of each policy is equivalent for now to the inital costs
     sum = costs
     
     
     min_sum = 0
     cond = True
 
-    for iter in range(100):
-        #length of costs tells us the amount of policies
+    while cond:
+        #iterate through the number of policies
         for policy in range(len(probabilities)):
+            #iterate throught he number of states
             for state in range(len(probabilities[policy])):
+                #iterate through the number of probabilities from going from state: state to any other state
                 for probability in range(len(probabilities[policy][state])):
+                    #for state find the optimal policy each iteration which will be the mimunm of that the sum of the cost of each policy of each state
                     sum[policy] += probabilities[policy][state][probability]*Vi[probability]
                 
                 min_sum = min(sum)
@@ -68,7 +72,7 @@ def Bellman_Equation(costs:list,probabilities:list):
                 cond = False
           
             
-    return Vi       
+    return Vi      
 
 
     
