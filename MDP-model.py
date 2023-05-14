@@ -108,6 +108,7 @@ def create_matrix(lines:list):
             print("State2:",lines[i][2],position_state2)
             print("Probability",int(lines[i][3])/100)
             print(tmatrix[0][0])
+            print(tmatrix[0][0])
         tmatrix[position_policy][position_state1][position_state2] = int(lines[i][3])/100
   
     
