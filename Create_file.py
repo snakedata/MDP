@@ -1,4 +1,4 @@
-def createtxt(states:list, actions:list)->void:
+def createtxt(states:list, actions:list)->None:
     """"Creates a text file with the format State1-Action-State2:Probability
     """""
     proboff=[70,20,10]
