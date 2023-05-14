@@ -2,21 +2,21 @@ import re
 import file_reader
     
 def parse(file: str)-> str:
-
     """Given a file it returns any strings that match the format given
     """
     lines  = []
     with open(file) as stream:
         for line in stream:
-            m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)
+            m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)     ##If the line follows this format "string-string-string:any two digit number" is appended to the list
             if m!=None:
                 lines.append(line)
             else:
-                print("This line does not follow the pattern position:")   
+                print("This line does not follow the desired format")   
     return lines                 
-def get(lines:list)->list:    
+def get(lines:list)->list: 
+  """Given a list it separates each element of the list if 
+  """
     final = []
-
     for line in lines:
         split = line.replace(':','-')
         split = split.split('-')
