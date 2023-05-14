@@ -14,8 +14,8 @@ def parse(file: str)-> str:
                 print("This line does not follow the desired format")   
     return lines                 
 def get(lines:list)->list: 
-  """Given a list it separates each element of the list if 
-  """
+    """Given a list it separates each element of the list if 
+    """
     final = []
     for line in lines:
         split = line.replace(':','-')
