@@ -19,14 +19,7 @@ def parse(file: str)-> str:
             else:
                 print("This line does not follow the pattern")   
     return lines                 
-def get(lines:list):    
-    final = []
 
-    for line in lines:
-        split = line.replace(':','-')
-        split = split.split('-')
-        final.append(split)
-    return final
 def minimum(l:list):
     return l.index(min(l))
 
@@ -52,7 +45,7 @@ def Bellman_Equation(costs:list,probabilities:list):
     #create a list of lenght of policies of sums and policies
     
     Vi = create_list_of(1,len(probabilities[0])) 
-    sum = create_list_of(0,len(probabilities[0])) 
+    sum = create_list_of(0,len(probabilities)) 
     
   
     min_sum = 0
@@ -67,7 +60,7 @@ def Bellman_Equation(costs:list,probabilities:list):
                     print("policy",policy)
                     print("state",state)
                     print("probability",probability)
-                    sum[state] += probabilities[policy][state][probability]*Vi[state]
+                    sum[policy] += probabilities[policy][state][probability]*Vi[state]
                     print(sum)
             min_sum = minimum(sum)
             if (min_sum -Vi[policy])<0.5:
