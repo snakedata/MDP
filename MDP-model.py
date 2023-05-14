@@ -10,11 +10,7 @@ def parse(file: str)-> str:
         for line in stream:
             m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)
             if m!=None:
-                print("There is a match\n")
-                print(line)
                 lines.append(line)
-                i += 1
-                
             else:
                 print("This line does not follow the pattern")   
     return lines                 
