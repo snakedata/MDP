@@ -6,15 +6,13 @@ def parse(file: str)-> str:
     """Given a file it returns any strings that match the format given
     """
     lines  = []
-    i = 0
     with open(file) as stream:
         for line in stream:
             m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)
             if m!=None:
                 lines.append(line)
-                i += 1
             else:
-                print("This line does not follow the pattern position:",i)   
+                print("This line does not follow the pattern position:")   
     return lines                 
 def get(lines:list):    
     final = []
@@ -33,7 +31,7 @@ def create_list_of(n:int,l:int):
     return [n]*l
 
 def Bellman_Equation(costs:list,probabilities:list):
-    """Computing the bellman equations for each state
+    """Computing the Bellman equations for each state using as input the conditional probability tables
     Vi+1(StateX) = min(cost(policy1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
                        cost(policy2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
     The organization of the lists costs and probabilities has to be very specific
