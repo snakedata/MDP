@@ -156,5 +156,15 @@ v = Bellman_Equation([1,1],matrix)
 
 #Mapping function:
 
-for i in range(15):
-    print("State" + str(state_input[i])+":"+str(v[i]))
+#Mapping function:
+print("INITIAL STATE:16ºC\t\t GOAL STATE:22ºC")
+print("Value function after doing the Bellman equations:\n")
+i=16
+n=0
+while n<=18:
+    print("State" +str(i)+" : "+str(v[0][n]))
+    i=i+0.5
+    n=n+1
+
+print("Optimal policy for each state is:\n")
+print(v)
