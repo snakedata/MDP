@@ -47,10 +47,13 @@ def create_list_of(n:int,l:int)->list:
     """creates a list size l with every value equal to n
     """
     return [n]*l
+def equate_lists(li:list)->list:
+    obj = create_list_of(1,len(li))
+    for i in range(len(li)):
+        obj[i] = li[i]
+    return obj
 
-
-
-def Bellman_Equation(costs:list,probabilities:list,s1:State):
+def Bellman_Equation(costs:list,probabilities:list)-> list:
     """Computing the bellman equations for each state
     Vi+1(StateX) = min(cost(action1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
                        cost(action2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
@@ -65,62 +68,63 @@ def Bellman_Equation(costs:list,probabilities:list,s1:State):
     Create a list of lenght of actions of sums and actions
     """
     
-    Vi = 1
-    if (s1.name=="state10"):   ##If the input state in the Bellman equations is 22ºC the value of V is 0 since it is the goal state
-        Vi=0
-        return Vi
-    
+    Vi = create_list_of(1,len(probabilities[0][0])) 
+    Vi[2] = 0
     #costs of each action is equivalent for now to the inital costs
-    sum = costs    
+    sum = create_list_of(1,len(probabilities))
+    for i in range(len(costs)):
+        sum[i] = costs[i]
+    iter = 100
+    
     min_sum = 0
-    print(len(probabilities[0]))
-    print(len(probabilities))
-    while abs((min_sum -Vi))>0.1:
-        #repeat value iteration until until the difference between Vi and Vi-1 is less than 0.1
+    cond = True
+    
+    for v in range(iter):
+        #iterate through he number of states
         for state in range(len(probabilities[0])):    
             #iterate through the number of actions
             for action in range(len(probabilities)):
-                ##print(probabilities[action][state])
+                print(probabilities[action][state])
                 #iterate through the number of probabilities from going from state: state to any other state
                 for probability in range(len(probabilities[action][state])):
                     #for state find the optimal action each iteration which will be the mimunm of that the sum of the cost of each action of each state
                     sum[action] += probabilities[action][state][probability]*Vi[probability]
-                    ##print(sum)
-
-                
-           ## print(Vi)
-           ## print(sum)
-
-            min_sum = min(sum)
-            Vi[state]=min_sum
-    return Vi       
+                min_sum = min(sum)
+                Vi[state]=min_sum
+            sum = equate_lists(costs)
+            
+            
+            print(sum)
+            print(Vi[state])
+            if (min_sum -Vi[state])<0.01:
+                cond = False 
+    return Vi          
 
 
 
     
 
 
-def create_matrix(lines:list):
+def create_matrix(lines:list)-> list:
     
     actions = []
     states = []
    
-    for action in range(len(lines)):
-        actions.append(lines[action][1])
-    actions = duplicates(actions)
-    actions = sorted(actions)  
-     
     for i in range(len(lines)):
+        actions.append(lines[i][1])
         states.append(lines[i][0])
         states.append(lines[i][2])
+        
     states = duplicates(states)
     states = sorted(states) 
+    actions = duplicates(actions)
+    actions = sorted(actions)  
     
     
-    smatrix1 = [[0]*(len(states)) for _ in range(len(states))]
-    smatrix2 = [[0]*(len(states)) for _ in range(len(states))]
-    tmatrix = create_list_of(1,2)
-     
+    
+    tmatrix = [[[0]*(len(states)) for _ in range(len(states))] for _ in range(len(actions))]
+
+
     
     for i in range(len(lines)):
         position_action = actions.index(lines[i][1])
@@ -130,16 +134,9 @@ def create_matrix(lines:list):
 
         
         probability = int(lines[i][3])/100
-        if position_action == 0:
-            smatrix1[position_state1][position_state2] = probability
-        elif position_action == 1:
-            smatrix2[position_state1][position_state2] = probability
+        tmatrix[position_action][position_state1][position_state2] = probability
+       
     
-    tmatrix[0] = smatrix1
-    tmatrix[1] = smatrix2
-        
-
-    return tmatrix
 
 state_input = []
 for i in range(15):
@@ -152,4 +149,4 @@ separated_lines = file_reader.get(lines)
 matrix = create_matrix(separated_lines)
 v = Bellman_Equation([1,1],matrix)
 
-print(matrix)
+print(v)
