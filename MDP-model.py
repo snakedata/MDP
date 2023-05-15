@@ -1,6 +1,16 @@
 import re 
 import file_reader
 
+class State():
+    def _init_(self,name):
+        self.name=name
+
+
+class States():
+    def _init_(self,list):
+        self.list=list
+
+
 
 def parse(file: str)-> str:
     """Given a file it returns any strings that match the format given
@@ -39,7 +49,8 @@ def create_list_of(n:int,l:int)->list:
     return [n]*l
 
 
-def Bellman_Equation(costs:list,probabilities:list):
+
+def Bellman_Equation(costs:list,probabilities:list,State state):
     """Computing the bellman equations for each state
     Vi+1(StateX) = min(cost(action1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
                        cost(action2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
@@ -54,36 +65,41 @@ def Bellman_Equation(costs:list,probabilities:list):
     Create a list of lenght of actions of sums and actions
     """
     
-    Vi = create_list_of(1,len(probabilities[0][0])) 
-    Vi[2] = 0
+    Vi = 1
+    if (state.name=="state10"):   ##If the input state in the Bellman equations is 22ºC the value of V is 0 since it is the goal state
+        Vi=0
+        return Vi
+    
     #costs of each action is equivalent for now to the inital costs
     sum = costs
     iter = 10
     
     min_sum = 0
     cond = True
-    
-    for v in range(iter):
-        #iterate through he number of states
+    print(len(probabilities[0]))
+    print(len(probabilities))
+    while (min_sum -Vi[action])>0.1:
+        #repeat value iteration until until the difference between Vi and Vi-1 is less than 0.1
         for state in range(len(probabilities[0])):    
             #iterate through the number of actions
             for action in range(len(probabilities)):
-                print(probabilities[action][state])
+                ##print(probabilities[action][state])
                 #iterate through the number of probabilities from going from state: state to any other state
                 for probability in range(len(probabilities[action][state])):
                     #for state find the optimal action each iteration which will be the mimunm of that the sum of the cost of each action of each state
                     sum[action] += probabilities[action][state][probability]*Vi[probability]
-                    print(sum)
+                    ##print(sum)
 
                 
-            print(Vi)
-            print(sum)
+           ## print(Vi)
+           ## print(sum)
+
             min_sum = min(sum)
+            sum =create_list_of(1,2)
             Vi[state]=min_sum
             sum =create_list_of(1,2)
-            if (min_sum -Vi[action])<0.1:
-                cond = False 
     return Vi       
+
 
 
     
