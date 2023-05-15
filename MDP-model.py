@@ -174,6 +174,7 @@ separated_lines = get(lines)
 
 matrix = create_matrix(separated_lines)
 v = Bellman_Equation([1,2],matrix)
+policies = optimal_policy(v,matrix,[1,1])
 
 #Mapping function:
 print("INITIAL STATE:16ºC\t\t GOAL STATE:22ºC\n")
@@ -181,13 +182,13 @@ print("Value function after doing the Bellman equations:")
 i=16
 n=0
 while n<=18:
-    print("State" +str(i)+" : "+str(v[0][n]))
+    print("State" +str(i)+" : "+str(v[n]))
     i=i+0.5
     n=n+1
 i=16
 n=0
 print("\nOptimal policy for each state is:")
 while n<=18:
-    print("State" +str(i)+" : "+str(v[1][n]))
+    print("State" +str(i)+" : "+str(policies[n]))
     i=i+0.5
     n=n+1
