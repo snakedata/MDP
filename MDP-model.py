@@ -71,11 +71,12 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
     """
     
     Vi = create_list_of(1,len(probabilities[0][0])) 
-    Vi[2] = 0
+    Vi[3] = 0
     #costs of each action is equivalent for now to the inital costs
     sum = create_list_of(1,len(probabilities))
-    sum=equate_lists(costs)
-    iter = 100
+    for i in range(len(costs)):
+        sum[i] = costs[i]
+    iter = 20
     
     min_sum = 0
     cond = True
@@ -85,21 +86,19 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
         for state in range(len(probabilities[0])):    
             #iterate through the number of actions
             for action in range(len(probabilities)):
-                print(probabilities[action][state])
                 #iterate through the number of probabilities from going from state: state to any other state
                 for probability in range(len(probabilities[action][state])):
                     #for state find the optimal action each iteration which will be the mimunm of that the sum of the cost of each action of each state
                     sum[action] += probabilities[action][state][probability]*Vi[probability]
                 min_sum = min(sum)
                 Vi[state]=min_sum
+            Vi[3] = 0    
             sum = equate_lists(costs)
             
             
-            print(sum)
-            print(Vi[state])
             if (min_sum -Vi[state])<0.01:
                 cond = False 
-    return Vi          
+    return Vi   
 
 
 
