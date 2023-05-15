@@ -48,6 +48,8 @@ def create_list_of(n:int,l:int)->list:
     """
     return [n]*l
 def equate_lists(li:list)->list:
+    """equates the values of each list
+    """
     obj = create_list_of(1,len(li))
     for i in range(len(li)):
         obj[i] = li[i]
