@@ -163,10 +163,9 @@ def create_matrix(lines:list)-> list:
        
     
     return tmatrix
-#Create 14 for thermometerinput states
 state_input = []
 
-for i in range(15):
+for i in range(16):
     state_input.append(i)
    
 file_reader.createtxt(state_input,[0,1])
@@ -174,19 +173,21 @@ lines =  parse("newfile.txt")
 separated_lines = get(lines)
 
 matrix = create_matrix(separated_lines)
-v = Bellman_Equation([1,1],matrix)
+v = Bellman_Equation([1,2],matrix)
 
 #Mapping function:
-
-#Mapping function:
-print("INITIAL STATE:16ºC\t\t GOAL STATE:22ºC")
-print("Value function after doing the Bellman equations:\n")
+print("INITIAL STATE:16ºC\t\t GOAL STATE:22ºC\n")
+print("Value function after doing the Bellman equations:")
 i=16
 n=0
 while n<=18:
     print("State" +str(i)+" : "+str(v[0][n]))
     i=i+0.5
     n=n+1
-
-print("Optimal policy for each state is:\n")
-print(v)
+i=16
+n=0
+print("\nOptimal policy for each state is:")
+while n<=18:
+    print("State" +str(i)+" : "+str(v[1][n]))
+    i=i+0.5
+    n=n+1
