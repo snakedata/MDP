@@ -141,7 +141,11 @@ def create_matrix(lines:list)-> list:
 state_input = []
 for i in range(15):
     state_input.append(i)
+   
 
+for i in state_input:
+    state_input[i] = str(i).rjust(2, '0')
+    
 file_reader.createtxt(state_input,[0,1])
 lines =  parse("newfile.txt")
 separated_lines = file_reader.get(lines)
