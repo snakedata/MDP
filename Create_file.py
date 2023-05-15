@@ -1,6 +1,6 @@
 def add_zeros(elem:str)->str:
-  """Adds zeroes to the name of the states so instead of being state0 it is state00 state1 is state01 and so on
-""""
+    """Adds zeroes to the name of the states so instead of being state0 it is state00 state1 is state01 and so on  
+    """""
     return str(elem).rjust(2, '0')
 def createtxt(states:list, actions:list)->None:
     """"Creates a text file with the format State1-Action-State2:Probability
