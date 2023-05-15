@@ -94,7 +94,29 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
             sum = equate_lists(costs)
     return Vi[1]       
 
+def optimal_policy(Vi:list,probabilities:list,costs:list)->str:
+    optimal_policy= create_list_of(0,len(Vi))      
+    """for action in range(len(probabilities[0])):
+        for i in range (len(costs)):
+            for probability in range(len(probabilities[action][state])):
+                sum[i]= costs[i]+probabilities[action][state][probability]*Vi[1][probability]"""
+    sum = equate_lists(costs)
+    for state in range(len(probabilities[0])):    
+            #iterate through the number of actions
+        for action in range(len(probabilities)):
+                #iterate through the number of probabilities from going from state: state to any other state
+            for probability in range(len(probabilities[action][state])):
+                    sum[action] += probabilities[action][state][probability]*Vi[probability]
+                    print(sum)
+        print("State:",state)
 
+        if sum[0]<sum[1]:
+            optimal_policy[state]="OFF"
+        else:
+            optimal_policy[state]="ON"
+        sum = create_list_of(1,2)
+    print(optimal_policy)
+    return Vi, optimal_policy    
     
 
 
