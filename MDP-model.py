@@ -155,4 +155,7 @@ separated_lines = file_reader.get(lines)
 matrix = create_matrix(separated_lines)
 v = Bellman_Equation([1,1],matrix)
 
-print(v)
+#Mapping function:
+
+for i in range(15):
+    print("State" + str(state_input[i])+":"+str(v[i]))
