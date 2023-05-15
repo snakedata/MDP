@@ -11,6 +11,8 @@ def parse(file: str)-> list:
             m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)     ##If the line follows this format "string-string-string:any two digit number" is appended to the list
             if m!=None:
                 lines.append(line)
+            else:
+                print("This line does not follow the desired format")   
     return lines                 
 
 def get(lines:list)->list: 
@@ -71,7 +73,7 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
     iter = 50
     
     min_sum = 0 
-    cond = True
+
     
     for v in range(iter):
         #iterate through he number of states
@@ -90,31 +92,26 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
             Vi[1][11] = 0  
             Vi[0][11] = 0
             sum = equate_lists(costs)
+    index=Vi[1][16]  ##Insert temperature=16ºC at the beginning of the list
+    Vi[1].pop(16)
+    Vi[1].insert(0,index) 
     return Vi[1]       
 
 def optimal_policy(Vi:list,probabilities:list,costs:list)->str:
     optimal_policy= create_list_of(0,len(Vi))      
-    """for action in range(len(probabilities[0])):
-        for i in range (len(costs)):
-            for probability in range(len(probabilities[action][state])):
-                sum[i]= costs[i]+probabilities[action][state][probability]*Vi[1][probability]"""
-    sum = equate_lists(costs)
+    sum = equate_lists(costs) ##Sum the costs to the optimal policy
     for state in range(len(probabilities[0])):    
             #iterate through the number of actions
         for action in range(len(probabilities)):
                 #iterate through the number of probabilities from going from state: state to any other state
             for probability in range(len(probabilities[action][state])):
-                    sum[action] += probabilities[action][state][probability]*Vi[probability]
-                    print(sum)
-        print("State:",state)
-
+                    sum[action] += probabilities[action][state][probability]*Vi[probability]       ##Calculate the optimal policy 
         if sum[0]<sum[1]:
-            optimal_policy[state]="OFF"
+            optimal_policy[state]="OFF" 
         else:
             optimal_policy[state]="ON"
         sum = create_list_of(1,2)
-    print(optimal_policy)
-    return optimal_policy    
+    return optimal_policy      
     
 
 
@@ -172,7 +169,7 @@ separated_lines = get(lines)
 
 matrix = create_matrix(separated_lines)
 v = Bellman_Equation([1,2],matrix)
-policies = optimal_policy(v,matrix,[1,1])
+policies = optimal_policy(v,matrix,[1,2])
 
 #Mapping function:
 print("INITIAL STATE:16ºC\t\t GOAL STATE:22ºC\n")
