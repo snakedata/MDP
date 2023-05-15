@@ -5,7 +5,6 @@ def add_zeros(elem:str)->str:
 def createtxt(states:list, actions:list)->None:
     """"Creates a text file with the format State1-Action-State2:Probability
     """""
-    print(len(states))
     proboff=[70,20,10]
     probon=[10,20,50,20]
     state2=[-1,0,1,2]
