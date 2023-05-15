@@ -45,6 +45,7 @@ def equate_lists(li:list)->list:
         obj[i] = li[i]
     return obj
 
+
 def Bellman_Equation(costs:list,probabilities:list)-> list:
     """Computing the bellman equations for each state
     Vi+1(StateX) = min(cost(action1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
@@ -59,16 +60,16 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
            
     Create a list of lenght of actions of sums and actions
     """
-    
-    Vi = [create_list_of(1,len(probabilities[0][0])) for _ in range(len(probabilities))] 
+    #create a list which contains a list in each position of length states
+    Vi = [create_list_of(1,len(probabilities[0][0])) for _ in range(2)] 
+    #intial termometer at state 22 degrees is 0
     Vi[0][11] = 0
     #costs of each action is equivalent for now to the inital costs
     sum = create_list_of(1,len(probabilities))
-    for i in range(len(costs)):
-        sum[i] = costs[i]
-    iter = 200
+    sum = equate_lists(costs)
+    iter = 50
     
-    min_sum = 0
+    min_sum = 0 
     cond = True
     
     for v in range(iter):
@@ -81,17 +82,15 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
                     #for state find the optimal action each iteration which will be the mimunm of that the sum of the cost of each action of each state
                     sum[action] += probabilities[action][state][probability]*Vi[0][probability]
                 min_sum = min(sum)
-
+            #replace Vi+1 with min_sum
             Vi[1][state]=min_sum
             Vi[0] = equate_lists(Vi[1])
+            #ensure that position 11 of state 22 degrees is 0
             Vi[1][11] = 0  
-            Vi[0][11] = 0    
+            Vi[0][11] = 0
             sum = equate_lists(costs)
-            
-            
-            if (min_sum -Vi[0][state])<0.01:
-                cond = False 
-    return Vi[1]   
+    return Vi[1]       
+
 
 
     
