@@ -50,7 +50,7 @@ def create_list_of(n:int,l:int)->list:
 
 
 
-def Bellman_Equation(costs:list,probabilities:list,State state):
+def Bellman_Equation(costs:list,probabilities:list,s1:State):
     """Computing the bellman equations for each state
     Vi+1(StateX) = min(cost(action1)+P1(StateX|StateX)Vi(StateX)+P1(StateY|StateX)Vi(StateY)+P1(StateZ|StateX)Vi(StateZ),
                        cost(action2)+P2(StateX|StateX)Vi(StateX)+P2(StateY|StateX)Vi(StateY)+P2(StateZ|StateX)Vi(StateZ))
@@ -66,19 +66,16 @@ def Bellman_Equation(costs:list,probabilities:list,State state):
     """
     
     Vi = 1
-    if (state.name=="state10"):   ##If the input state in the Bellman equations is 22ºC the value of V is 0 since it is the goal state
+    if (s1.name=="state10"):   ##If the input state in the Bellman equations is 22ºC the value of V is 0 since it is the goal state
         Vi=0
         return Vi
     
     #costs of each action is equivalent for now to the inital costs
-    sum = costs
-    iter = 10
-    
+    sum = costs    
     min_sum = 0
-    cond = True
     print(len(probabilities[0]))
     print(len(probabilities))
-    while (min_sum -Vi[action])>0.1:
+    while abs((min_sum -Vi))>0.1:
         #repeat value iteration until until the difference between Vi and Vi-1 is less than 0.1
         for state in range(len(probabilities[0])):    
             #iterate through the number of actions
@@ -95,9 +92,7 @@ def Bellman_Equation(costs:list,probabilities:list,State state):
            ## print(sum)
 
             min_sum = min(sum)
-            sum =create_list_of(1,2)
             Vi[state]=min_sum
-            sum =create_list_of(1,2)
     return Vi       
 
 
