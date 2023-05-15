@@ -69,9 +69,8 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
     Vi[0][12] = 0
     #costs of each action is equivalent for now to the inital costs
     sum = create_list_of(1,len(probabilities))
-    sum = equate_lists(costs)
+    sum = equate_lists(costs)   ##sum is now equal to cost which stores the cost of each action
     iter = 50
-    
     min_sum = 0 
 
     
@@ -92,12 +91,9 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
             Vi[1][12] = 0  
             Vi[0][12] = 0
             sum = equate_lists(costs)
-    ##index=Vi[1][16]  ##Insert temperature=16ºC at the beginning of the list
-    ##Vi[1].pop(16)
-    ##Vi[1].insert(0,index) 
     return Vi[1]       
 
-def optimal_policy(Vi:list,probabilities:list,costs:list)->str:
+def optimal_policy(Vi:list,probabilities:list,costs:list)->list:
     optimal_policy= create_list_of(0,len(Vi))      
     sum = equate_lists(costs) ##Sum the costs to the optimal policy
     for state in range(len(probabilities[0])):    
@@ -106,7 +102,10 @@ def optimal_policy(Vi:list,probabilities:list,costs:list)->str:
                 #iterate through the number of probabilities from going from state: state to any other state
             for probability in range(len(probabilities[action][state])):
                     sum[action] += probabilities[action][state][probability]*Vi[probability]       ##Calculate the optimal policy 
-        if sum[0]<sum[1]:
+        if state==12: ##When it is the goal state the policy is to do nothing
+            sum[0]=0
+            sum[1]=0
+        if sum[0]<=sum[1]:
             optimal_policy[state]="OFF" 
         else:
             optimal_policy[state]="ON"
@@ -156,20 +155,22 @@ def create_matrix(lines:list)-> list:
         probability = int(lines[i][3])/100
         tmatrix[position_action][position_state1][position_state2] = probability
        
-    
     return tmatrix
-state_input = []
 
-for i in range(16):
+
+
+
+
+state_input = []
+for i in range(0,17):
     state_input.append(i)
-print(state_input)
 file_reader.createtxt(state_input,[0,1])
 lines =  parse("newfile.txt")
 separated_lines = get(lines)
 
 matrix = create_matrix(separated_lines)
-v = Bellman_Equation([1,2],matrix)
-policies = optimal_policy(v,matrix,[1,2])
+v = Bellman_Equation([4,8],matrix)
+policies = optimal_policy(v,matrix,[4,8])
 
 #Mapping function:
 print("INITIAL STATE:16ºC\t\t GOAL STATE:22ºC\n")
