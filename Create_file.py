@@ -1,11 +1,3 @@
-def get(lines:list):    
-    final = []
-
-    for line in lines:
-        split = line.replace(':','-')
-        split = split.split('-')
-        final.append(split)
-    return final
 def add_zeros(elem:str)->str:
     return str(elem).rjust(2, '0')
 def createtxt(states:list, actions:list)->None:
