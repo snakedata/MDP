@@ -16,7 +16,7 @@ def createtxt(states:list, actions:list)->None:
     f.write("state15-0-state15:90\n")                ##state15=16ºC state16=24.5ºC state17=25ºC
     f.write("state15-0-state00:10\n")
     f.write("state16-0-state16:20\n")
-    f.write("state16-0-state14:70\n")
+    f.write("state16-0-state14:70\n")               ##Manually writing the operations that are exceptions
     f.write("state16-0-state17:10\n")
     f.write("state17-0-state17:30\n")
     f.write("state17-0-state16:70\n")
@@ -29,7 +29,7 @@ def createtxt(states:list, actions:list)->None:
     f.write("state15-1-state00:50\n")
     f.write("state15-1-state01:20\n")
     f.write("state16-1-state16:20\n")
-    f.write("state16-1-state17:70\n")
+    f.write("state16-1-state17:70\n")           ##Manually writing the operations that are exceptions
     f.write("state16-1-state14:10\n")
     f.write("state17-1-state17:90\n")
     f.write("state17-1-state16:10\n")
