@@ -114,7 +114,7 @@ def optimal_policy(Vi:list,probabilities:list,costs:list)->str:
             optimal_policy[state]="ON"
         sum = create_list_of(1,2)
     print(optimal_policy)
-    return Vi, optimal_policy    
+    return optimal_policy    
     
 
 
