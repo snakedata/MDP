@@ -9,7 +9,7 @@ def createtxt(states:list, actions:list)->None:
     f = open("newfile.txt", "w+")
     for i in range(len(states)):     ##For loop to write the operations involving the thermostat off
         for p in range(0,3):
-            f.write("state"+str(states[i])+"-"+str(actions[0])+"-"+"state"+add_zeros(str(int(states[i])+int(state2[p])))+":"+str(proboff[p]))
+            f.write("state"+add_zeros(str(states[i]))+"-"+str(actions[0])+"-"+"state"+add_zeros(str(int(states[i])+int(state2[p])))+":"+str(proboff[p]))
             f.write("\n")
     f.write("state15-0-state15:90\n")                ##state15=16ºC state16=24.5ºC state17=25ºC
     f.write("state15-0-state00:10\n")
@@ -21,7 +21,7 @@ def createtxt(states:list, actions:list)->None:
     f.write("state00-0-state15:70\n")
     for i in range(len(states)):     ##For loop to write the operations involving the thermostat on
         for p in range(0,4):
-            f.write("state"+str(states[i])+"-"+str(actions[1])+"-"+"state"+add_zeros(str(int(states[i])+int(state2[p])))+":"+str(probon[p]))
+            f.write("state"+add_zeros(str(states[i]))+"-"+str(actions[1])+"-"+"state"+add_zeros(str(int(states[i])+int(state2[p])))+":"+str(probon[p]))
             f.write("\n")
     f.write("state15-1-state15:30\n")
     f.write("state15-1-state00:50\n")
