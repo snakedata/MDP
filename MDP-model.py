@@ -66,7 +66,7 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
     #create a list which contains a list in each position of length states
     Vi = [create_list_of(1,len(probabilities[0][0])) for _ in range(2)] 
     #intial termometer at state 22 degrees is 0
-    Vi[0][11] = 0
+    Vi[0][12] = 0
     #costs of each action is equivalent for now to the inital costs
     sum = create_list_of(1,len(probabilities))
     sum = equate_lists(costs)
