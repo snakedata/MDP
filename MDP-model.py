@@ -89,12 +89,12 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
             Vi[1][state]=min_sum
             Vi[0] = equate_lists(Vi[1])
             #ensure that position 11 of state 22 degrees is 0
-            Vi[1][11] = 0  
-            Vi[0][11] = 0
+            Vi[1][12] = 0  
+            Vi[0][12] = 0
             sum = equate_lists(costs)
-    index=Vi[1][16]  ##Insert temperature=16ºC at the beginning of the list
-    Vi[1].pop(16)
-    Vi[1].insert(0,index) 
+    ##index=Vi[1][16]  ##Insert temperature=16ºC at the beginning of the list
+    ##Vi[1].pop(16)
+    ##Vi[1].insert(0,index) 
     return Vi[1]       
 
 def optimal_policy(Vi:list,probabilities:list,costs:list)->str:
@@ -162,7 +162,7 @@ state_input = []
 
 for i in range(16):
     state_input.append(i)
-   
+print(state_input)
 file_reader.createtxt(state_input,[0,1])
 lines =  parse("newfile.txt")
 separated_lines = get(lines)
