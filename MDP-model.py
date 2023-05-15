@@ -1,16 +1,6 @@
 import re 
 import file_reader
 
-class State():
-    def _init_(self,name):
-        self.name=name
-
-
-class States():
-    def _init_(self,list):
-        self.list=list
-
-
 
 def parse(file: str)-> str:
     """Given a file it returns any strings that match the format given
