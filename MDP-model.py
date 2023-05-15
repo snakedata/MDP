@@ -160,8 +160,9 @@ def create_matrix(lines:list)-> list:
 
 
 
-
+#Main code sorting inputs
 state_input = []
+#17 states input, actions 1, 0
 for i in range(0,17):
     state_input.append(i)
 file_reader.createtxt(state_input,[0,1])
