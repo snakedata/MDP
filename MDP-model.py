@@ -11,8 +11,6 @@ def parse(file: str)-> list:
             m=re.match(r'^\w+-\w+-\w+:[0-9]+$',line)     ##If the line follows this format "string-string-string:any two digit number" is appended to the list
             if m!=None:
                 lines.append(line)
-            else:
-                print("This line does not follow the desired format")   
     return lines                 
 
 def get(lines:list)->list: 
