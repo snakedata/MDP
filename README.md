@@ -14,7 +14,8 @@ Then we read that file with regular expressions looking for the lines that follo
 
 Following that step, we use the "create_matrix" function that creates the CPT's for the actions of the MDP. The function works the following way, the traversal from any state to another considers an action which has a determined probability. Each line is converted to a position inside of a probability matrix. Probability matrices are organized based on the action. For example; a line, state0-1-state1:70 would be interpreted as going from state0 to state1 with action 1, probability of 0.7. This would then be introduced into the matrix which contains the probabilities of states with action 1 and would take the position 0,1. This is given that state0 is the first of the states and state 1 is the second. Therefore, each probability matrix contains a list of each individual state which contains the probability of going from that state to any other. An example could be the probabilities of state0: [0,0.7,0.2,0.1]. Therefore through this method we can utilize minimum resources by creating structures. 
 
-After that, we use the CPT's as inputs for the function "Bellman_Equation" which creates the Bellmans equations and does value iteration, we have set the function to keep iterating until the difference between the previously computed value and the actual value is less than 0.5
+After that, we use the CPT's as inputs for the function "Bellman_Equation" which creates the Bellmans equations and does value iteration, we have set the function to keep iterating until the difference between the previously computed value and the actual value is less than 0.5 The equations have the following format ![image](https://github.com/snakedata/MDP/assets/115793176/4bcb91a9-6c81-48fe-bbfa-b6b99fc82388)
+
 
 To finish it up, we print on screen the optimal policy. 
 
