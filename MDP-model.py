@@ -74,8 +74,7 @@ def Bellman_Equation(costs:list,probabilities:list)-> list:
     Vi[2] = 0
     #costs of each action is equivalent for now to the inital costs
     sum = create_list_of(1,len(probabilities))
-    for i in range(len(costs)):
-        sum[i] = costs[i]
+    sum=equate_lists(costs)
     iter = 100
     
     min_sum = 0
